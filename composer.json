@@ -13,12 +13,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Makeable\\FileSizeCheck\\": "src/"
+            "Makeable\\IncreasingFilesize\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Makeable\\FileSizeCheck\\Tests\\": "tests/"
+            "Makeable\\IncreasingFilesize\\Tests\\": "tests/"
         }
     },
     "scripts": {

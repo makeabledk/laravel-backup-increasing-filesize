@@ -1,8 +1,12 @@
-# laravel-backup-increasing-filesize
+# Laravel Backup: Increasing File Size health check
+
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/makeabledk/laravel-backup-increasing-filesize.svg?style=flat-square)](https://packagist.org/packages/makeabledk/laravel-backup-increasing-filesize)
+[![Build Status](https://img.shields.io/travis/makeabledk/laravel-backup-increasing-filesize/master.svg?style=flat-square)](https://travis-ci.org/makeabledk/laravel-backup-increasing-filesize)
+[![StyleCI](https://styleci.io/repos/102474433/shield?branch=master)](https://styleci.io/repos/102474433)
 
 **IMPORTANT NOTICE** 
 
-This package is still under active development.
+This is a package used internally by makeabledk and may not follow SemVer. Use it at your own risk.
 
 ## Install
 
@@ -27,7 +31,7 @@ We are happy to receive pull requests for additional functionality. Please see [
 ## Credits
 
 - [Rasmus Christoffer Nielsen](https://github.com/rasmuscnielsen)
-- [Peter Rosenmeier Rytter](https://github.com/rasmuscnielsen)
+- [Peter Rytter](https://github.com/pederytter)
 - [All Contributors](../../contributors)
 
 ## License
