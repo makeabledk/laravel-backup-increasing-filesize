@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/makeabledk/laravel-backup-increasing-filesize.svg?style=flat-square)](https://packagist.org/packages/makeabledk/laravel-backup-increasing-filesize)
 [![Build Status](https://img.shields.io/travis/makeabledk/laravel-backup-increasing-filesize/master.svg?style=flat-square)](https://travis-ci.org/makeabledk/laravel-backup-increasing-filesize)
-[![StyleCI](https://styleci.io/repos/102474433/shield?branch=master)](https://styleci.io/repos/102474433)
+[![StyleCI](https://styleci.io/repos/206548418/shield?branch=master)](https://styleci.io/repos/206548418)
 
 **IMPORTANT NOTICE** 
 
