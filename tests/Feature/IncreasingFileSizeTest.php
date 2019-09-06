@@ -1,17 +1,16 @@
 <?php
 
+namespace Makeable\IncreasingFilesize\Tests\Feature;
+
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
-use Makeable\FileSizeCheck\IncreasingFileSize;
-use Makeable\FileSizeCheck\Tests\TestCase;
+use Makeable\IncreasingFilesize\IncreasingFileSize;
+use Makeable\IncreasingFilesize\Tests\TestCase;
 use Spatie\Backup\Events\HealthyBackupWasFound;
 use Spatie\Backup\Events\UnhealthyBackupWasFound;
 
 class IncreasingFileSizeTest extends TestCase
 {
-    /** @var \Carbon\Carbon */
-    protected $date;
-
     public function setUp()
     {
         parent::setUp();
@@ -26,15 +25,11 @@ class IncreasingFileSizeTest extends TestCase
     /** @test **/
     public function it_is_considered_healthy_when_only_one_backup_present()
     {
-        $this->fakeNextBackupOfSize(1, now()->subDay(1), 100);
-        $this->fakeNextBackupOfSize(2, now(), 96);
+        $this->fakeNextBackupOfSize(1, now());
 
-        Artisan::call('backup:monitor');
+        $this->artisan('backup:monitor')->assertExitCode(0);;
 
         Event::assertDispatched(HealthyBackupWasFound::class);
-
-        $this->expectsEvents(HealthyBackupWasFound::class);
-        Artisan::call('backup:monitor');
     }
 
     /** @test **/
@@ -42,8 +37,10 @@ class IncreasingFileSizeTest extends TestCase
     {
         $this->fakeNextBackupOfSize(1, now()->subDay(1), 100);
         $this->fakeNextBackupOfSize(2, now(), 96);
-        $this->expectsEvents(HealthyBackupWasFound::class);
-        Artisan::call('backup:monitor');
+
+        $this->artisan('backup:monitor')->assertExitCode(0);;
+
+        Event::assertDispatched(HealthyBackupWasFound::class);
     }
 
     /** @test **/
@@ -52,7 +49,7 @@ class IncreasingFileSizeTest extends TestCase
         $this->fakeNextBackupOfSize(1, now()->subDay(1), 100);
         $this->fakeNextBackupOfSize(2, now(), 94);
 
-        Artisan::call('backup:monitor');
+        $this->artisan('backup:monitor')->assertExitCode(0);;
 
         Event::assertDispatched(UnhealthyBackupWasFound::class);
     }
@@ -63,20 +60,23 @@ class IncreasingFileSizeTest extends TestCase
         $this->app['config']->set('backup.monitor_backups.0.health_checks', [
             IncreasingFileSize::class => '10%',
         ]);
+
         $this->fakeNextBackupOfSize(1, now()->subDay(2), 100);
         $this->fakeNextBackupOfSize(2, now()->subDay(1), 94);
-        $this->expectsEvents(HealthyBackupWasFound::class);
-        Artisan::call('backup:monitor');
+
+        $this->artisan('backup:monitor')->assertExitCode(0);;
+        Event::assertDispatched(HealthyBackupWasFound::class);
+
         $this->fakeNextBackupOfSize(3, now(), 80);
-        $this->expectsEvents(UnhealthyBackupWasFound::class);
-        Artisan::call('backup:monitor');
+
+        $this->artisan('backup:monitor')->assertExitCode(0);;
+        Event::assertDispatched(UnhealthyBackupWasFound::class);
     }
 
     /**
      * @param $no
-     * @param string $date
+     * @param $date
      * @param int $sizeInKb
-     * @throws Exception
      */
     protected function fakeNextBackupOfSize($no, $date, $sizeInKb = 1)
     {

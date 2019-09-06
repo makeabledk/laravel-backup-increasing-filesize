@@ -1,6 +1,6 @@
 <?php
 
-namespace Makeable\FileSizeCheck;
+namespace Makeable\IncreasingFilesize;
 
 use Spatie\Backup\BackupDestination\BackupDestination;
 use Spatie\Backup\Helpers\Format;

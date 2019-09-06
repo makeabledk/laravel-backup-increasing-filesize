@@ -1,6 +1,6 @@
 <?php
 
-namespace Makeable\FileSizeCheck\Tests;
+namespace Makeable\IncreasingFilesize\Tests;
 
 use DateTime;
 use Illuminate\Support\Facades\File;
