@@ -2,17 +2,11 @@
 
 namespace Makeable\FileSizeCheck\Tests;
 
-
 use DateTime;
-use ZipArchive;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Console\Kernel;
-use Spatie\Backup\BackupServiceProvider;
-use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\Backup\BackupServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
@@ -40,7 +34,7 @@ abstract class TestCase extends Orchestra
         Storage::fake('local');
     }
 
-    protected function createFileOnDisk(string $diskName, string $filePath, DateTime $date, String $content = ''): string
+    protected function createFileOnDisk(string $diskName, string $filePath, DateTime $date, string $content = ''): string
     {
         Storage::disk($diskName)->put($filePath, $content);
 

@@ -26,15 +26,12 @@ class IncreasingFileSizeTest extends TestCase
     /** @test **/
     public function it_is_considered_healthy_when_only_one_backup_present()
     {
-
-        $this->fakeNextBackupOfSize(1, now()->subDay(1) , 100);
-        $this->fakeNextBackupOfSize(2, now() , 96);
+        $this->fakeNextBackupOfSize(1, now()->subDay(1), 100);
+        $this->fakeNextBackupOfSize(2, now(), 96);
 
         Artisan::call('backup:monitor');
 
-
         Event::assertDispatched(HealthyBackupWasFound::class);
-
 
         $this->expectsEvents(HealthyBackupWasFound::class);
         Artisan::call('backup:monitor');
@@ -43,8 +40,8 @@ class IncreasingFileSizeTest extends TestCase
     /** @test **/
     public function it_is_considered_healthy_when_newest_backup_is_reduced_within_tolerance()
     {
-        $this->fakeNextBackupOfSize(1, now()->subDay(1) , 100);
-        $this->fakeNextBackupOfSize(2, now() , 96);
+        $this->fakeNextBackupOfSize(1, now()->subDay(1), 100);
+        $this->fakeNextBackupOfSize(2, now(), 96);
         $this->expectsEvents(HealthyBackupWasFound::class);
         Artisan::call('backup:monitor');
     }
@@ -52,8 +49,8 @@ class IncreasingFileSizeTest extends TestCase
     /** @test **/
     public function it_is_considered_unhealthy_when_newest_backup_is_reduced_beyond_tolerance()
     {
-        $this->fakeNextBackupOfSize(1, now()->subDay(1) , 100);
-        $this->fakeNextBackupOfSize(2, now() , 94);
+        $this->fakeNextBackupOfSize(1, now()->subDay(1), 100);
+        $this->fakeNextBackupOfSize(2, now(), 94);
 
         Artisan::call('backup:monitor');
 
@@ -63,7 +60,6 @@ class IncreasingFileSizeTest extends TestCase
     /** @test **/
     public function tolerance_can_be_configured()
     {
-
         $this->app['config']->set('backup.monitor_backups.0.health_checks', [
             IncreasingFileSize::class => '10%',
         ]);

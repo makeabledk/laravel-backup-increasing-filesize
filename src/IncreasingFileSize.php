@@ -2,9 +2,9 @@
 
 namespace Makeable\FileSizeCheck;
 
+use Spatie\Backup\BackupDestination\BackupDestination;
 use Spatie\Backup\Helpers\Format;
 use Spatie\Backup\Tasks\Monitor\HealthCheck;
-use Spatie\Backup\BackupDestination\BackupDestination;
 
 class IncreasingFileSize extends HealthCheck
 {
@@ -31,7 +31,7 @@ class IncreasingFileSize extends HealthCheck
             return;
         }
 
-        list($newestSize, $previousSize) = [
+        [$newestSize, $previousSize] = [
             $backupDestination->backups()->get(0)->size(),
             $backupDestination->backups()->get(1)->size(),
         ];
@@ -39,11 +39,10 @@ class IncreasingFileSize extends HealthCheck
         $relativeSize = $newestSize / $previousSize;
         $loss = 1 - $relativeSize;
 
-
         [$fromSize, $toSize, $percentage] = [
             Format::humanReadableSize($previousSize),
             Format::humanReadableSize($newestSize),
-            '-' . number_format($loss * 100, 2) . '%'
+            '-'.number_format($loss * 100, 2).'%',
         ];
 
         $this->failIf(
@@ -58,9 +57,10 @@ class IncreasingFileSize extends HealthCheck
      */
     protected function parseValue($value)
     {
-        if (!is_numeric($value) && preg_match('/%/', $value)) {
+        if (! is_numeric($value) && preg_match('/%/', $value)) {
             return floatval($value) / 100;
         }
+
         return floatval($value);
     }
 }
