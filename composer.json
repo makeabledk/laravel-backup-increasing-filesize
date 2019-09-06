@@ -1,0 +1,27 @@
+{
+    "name": "makeabledk/laravel-backup-increasing-filesize",
+    "license": "CC-BY-SA-4.0",
+    "require": {
+        "php": ">=7.2.0"
+    },
+    "require-dev": {
+        "spatie/laravel-backup": "^6.0",
+        "friendsofphp/php-cs-fixer": "^2.3",
+        "phpunit/phpunit": "^7.5",
+        "orchestra/testbench" : "~3.7.0",
+        "mockery/mockery": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Makeable\\FileSizeCheck\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Makeable\\FileSizeCheck\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit"
+    }
+}
