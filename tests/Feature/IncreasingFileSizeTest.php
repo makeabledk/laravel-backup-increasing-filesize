@@ -2,7 +2,6 @@
 
 namespace Makeable\IncreasingFilesize\Tests\Feature;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 use Makeable\IncreasingFilesize\IncreasingFileSize;
 use Makeable\IncreasingFilesize\Tests\TestCase;
@@ -27,7 +26,7 @@ class IncreasingFileSizeTest extends TestCase
     {
         $this->fakeNextBackupOfSize(1, now());
 
-        $this->artisan('backup:monitor')->assertExitCode(0);;
+        $this->artisan('backup:monitor')->assertExitCode(0);
 
         Event::assertDispatched(HealthyBackupWasFound::class);
     }
@@ -38,7 +37,7 @@ class IncreasingFileSizeTest extends TestCase
         $this->fakeNextBackupOfSize(1, now()->subDay(1), 100);
         $this->fakeNextBackupOfSize(2, now(), 96);
 
-        $this->artisan('backup:monitor')->assertExitCode(0);;
+        $this->artisan('backup:monitor')->assertExitCode(0);
 
         Event::assertDispatched(HealthyBackupWasFound::class);
     }
@@ -49,7 +48,7 @@ class IncreasingFileSizeTest extends TestCase
         $this->fakeNextBackupOfSize(1, now()->subDay(1), 100);
         $this->fakeNextBackupOfSize(2, now(), 94);
 
-        $this->artisan('backup:monitor')->assertExitCode(0);;
+        $this->artisan('backup:monitor')->assertExitCode(0);
 
         Event::assertDispatched(UnhealthyBackupWasFound::class);
     }
@@ -64,12 +63,12 @@ class IncreasingFileSizeTest extends TestCase
         $this->fakeNextBackupOfSize(1, now()->subDay(2), 100);
         $this->fakeNextBackupOfSize(2, now()->subDay(1), 94);
 
-        $this->artisan('backup:monitor')->assertExitCode(0);;
+        $this->artisan('backup:monitor')->assertExitCode(0);
         Event::assertDispatched(HealthyBackupWasFound::class);
 
         $this->fakeNextBackupOfSize(3, now(), 80);
 
-        $this->artisan('backup:monitor')->assertExitCode(0);;
+        $this->artisan('backup:monitor')->assertExitCode(0);
         Event::assertDispatched(UnhealthyBackupWasFound::class);
     }
 
