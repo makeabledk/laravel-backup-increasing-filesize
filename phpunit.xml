@@ -20,6 +20,7 @@
         </whitelist>
     </filter>
     <php>
+        <ini name="display_errors" value="1"/>
         <env name="APP_NAME" value="mysite"/>
     </php>
 </phpunit>
