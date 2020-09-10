@@ -2,7 +2,6 @@
 
 namespace Makeable\IncreasingFilesize\Tests\Feature;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 use Makeable\IncreasingFilesize\IncreasingFileSize;
 use Makeable\IncreasingFilesize\Tests\TestCase;
