@@ -15,7 +15,8 @@ class IncreasingFileSize extends HealthCheck
 
     /**
      * IncreasingFileSize constructor.
-     * @param float $tolerance
+     *
+     * @param  float  $tolerance
      */
     public function __construct($tolerance = 0.05)
     {
@@ -23,7 +24,7 @@ class IncreasingFileSize extends HealthCheck
     }
 
     /**
-     * @param BackupDestination $backupDestination
+     * @param  BackupDestination  $backupDestination
      */
     public function checkHealth(BackupDestination $backupDestination)
     {
@@ -32,8 +33,8 @@ class IncreasingFileSize extends HealthCheck
         }
 
         [$newestSize, $previousSize] = [
-            $backupDestination->backups()->get(0)->size(),
-            $backupDestination->backups()->get(1)->size(),
+            $backupDestination->backups()->get(0)->sizeInBytes(),
+            $backupDestination->backups()->get(1)->sizeInBytes(),
         ];
 
         $relativeSize = $newestSize / $previousSize;
