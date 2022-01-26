@@ -32,8 +32,8 @@ class IncreasingFileSize extends HealthCheck
         }
 
         [$newestSize, $previousSize] = [
-            $backupDestination->backups()->get(0)->size(),
-            $backupDestination->backups()->get(1)->size(),
+            $backupDestination->backups()->get(0)->sizeInBytes(),
+            $backupDestination->backups()->get(1)->sizeInBytes(),
         ];
 
         $relativeSize = $newestSize / $previousSize;
