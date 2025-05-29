@@ -26,7 +26,7 @@ class IncreasingFileSize extends HealthCheck
     /**
      * @param  BackupDestination  $backupDestination
      */
-    public function checkHealth(BackupDestination $backupDestination)
+    public function checkHealth(BackupDestination $backupDestination): void
     {
         if ($backupDestination->backups()->count() < 2) {
             return;
@@ -53,7 +53,7 @@ class IncreasingFileSize extends HealthCheck
     }
 
     /**
-     * @param $value
+     * @param  $value
      * @return float|int
      */
     protected function parseValue($value)
