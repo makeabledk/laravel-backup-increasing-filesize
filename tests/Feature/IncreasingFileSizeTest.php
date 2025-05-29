@@ -77,8 +77,8 @@ class IncreasingFileSizeTest extends TestCase
     }
 
     /**
-     * @param $no
-     * @param $date
+     * @param  $no
+     * @param  $date
      * @param  int  $sizeInKb
      */
     protected function fakeNextBackupOfSize($no, $date, $sizeInKb = 1)
