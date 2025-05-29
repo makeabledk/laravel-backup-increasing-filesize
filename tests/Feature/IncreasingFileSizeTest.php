@@ -2,9 +2,11 @@
 
 namespace Makeable\IncreasingFilesize\Tests\Feature;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 use Makeable\IncreasingFilesize\IncreasingFileSize;
 use Makeable\IncreasingFilesize\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Spatie\Backup\Events\HealthyBackupWasFound;
 use Spatie\Backup\Events\UnhealthyBackupWasFound;
 
@@ -21,39 +23,39 @@ class IncreasingFileSizeTest extends TestCase
         ]);
     }
 
-    /** @test **/
+    #[Test]
     public function it_is_considered_healthy_when_only_one_backup_present()
     {
         $this->fakeNextBackupOfSize(1, now());
 
-        $this->artisan('backup:monitor')->assertExitCode(0);
-
+        $exitCode = Artisan::call('backup:monitor');
+        $this->assertEquals(0, $exitCode);
         Event::assertDispatched(HealthyBackupWasFound::class);
     }
 
-    /** @test **/
+    #[Test]
     public function it_is_considered_healthy_when_newest_backup_is_reduced_within_tolerance()
     {
         $this->fakeNextBackupOfSize(1, now()->subDay(1), 100);
         $this->fakeNextBackupOfSize(2, now(), 96);
 
-        $this->artisan('backup:monitor')->assertExitCode(0);
-
+        $exitCode = Artisan::call('backup:monitor');
+        $this->assertEquals(0, $exitCode);
         Event::assertDispatched(HealthyBackupWasFound::class);
     }
 
-    /** @test **/
+    #[Test]
     public function it_is_considered_unhealthy_when_newest_backup_is_reduced_beyond_tolerance()
     {
         $this->fakeNextBackupOfSize(1, now()->subDay(1), 100);
         $this->fakeNextBackupOfSize(2, now(), 94);
 
-        $this->artisan('backup:monitor')->expectsOutput('The backups on local are considered unhealthy!');
-
+        Artisan::call('backup:monitor');
+        $this->assertStringContainsString('are considered unhealthy!', Artisan::output());
         Event::assertDispatched(UnhealthyBackupWasFound::class);
     }
 
-    /** @test **/
+    #[Test]
     public function tolerance_can_be_configured()
     {
         $this->app['config']->set('backup.monitor_backups.0.health_checks', [
@@ -63,13 +65,14 @@ class IncreasingFileSizeTest extends TestCase
         $this->fakeNextBackupOfSize(1, now()->subDay(2), 100);
         $this->fakeNextBackupOfSize(2, now()->subDay(1), 94);
 
-        $this->artisan('backup:monitor');
-
+        Artisan::call('backup:monitor');
+        $this->assertStringNotContainsString('are considered unhealthy!', Artisan::output());
         Event::assertDispatched(HealthyBackupWasFound::class);
 
         $this->fakeNextBackupOfSize(3, now(), 80);
 
-        $this->artisan('backup:monitor')->expectsOutput('The backups on local are considered unhealthy!');
+        Artisan::call('backup:monitor');
+        $this->assertStringContainsString('are considered unhealthy!', Artisan::output());
         Event::assertDispatched(UnhealthyBackupWasFound::class);
     }
 

@@ -49,7 +49,7 @@ abstract class TestCase extends Orchestra
 
     protected function getDiskRootPath(string $diskName): string
     {
-        return Storage::disk($diskName)->getDriver()->getAdapter()->getPathPrefix();
+        return Storage::disk($diskName)->path('');
     }
 
     public function getStubDirectory(): string
