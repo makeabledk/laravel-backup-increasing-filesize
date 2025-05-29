@@ -53,7 +53,7 @@ class IncreasingFileSize extends HealthCheck
     }
 
     /**
-     * @param $value
+     * @param  $value
      * @return float|int
      */
     protected function parseValue($value)
